@@ -90,7 +90,6 @@
                 <img src="../../assets/img/hotel/hotel2.png" alt="" />
                 <span>预订</span>
             </a>
-            <Kefu></Kefu>
             <router-link :to="'/orders/hotelOrders/' + id" class="menu fcol fcen spc">
                 <img src="../../assets/img/hotel/order1.png" alt="" />
                 <span>订单</span>
@@ -101,12 +100,10 @@
 
 <script>
 import 'swiper/dist/css/swiper.min.css';
-import Kefu from '../../components/Kefu.vue';
 import { hotelInfo, hotelFacilityList, hotelChargeDetail } from '../../api/hotel';
 import { setTitle } from '../../utils/setTitle';
 import Swiper from 'swiper';
 export default {
-    components: { Kefu },
     data() {
         return {
             info: {},

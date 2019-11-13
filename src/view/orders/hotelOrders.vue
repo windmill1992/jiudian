@@ -34,7 +34,6 @@
                 <img src="../../assets/img/hotel/hotel1.png" alt="" />
                 <span>预订</span>
             </router-link>
-            <Kefu></Kefu>
             <a href="javascript:;" class="menu fcol fcen spc on">
                 <img src="../../assets/img/hotel/order2.png" alt="" />
                 <span>订单</span>
@@ -45,7 +44,6 @@
 
 <script>
 import Vue from 'vue';
-import Kefu from '../../components/Kefu.vue';
 import { LoadMore } from 'muse-ui';
 import { hotelOrderList } from '../../api/hotel';
 import moment from 'moment';
