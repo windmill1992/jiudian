@@ -247,9 +247,14 @@ export default {
             })
         },
         getActList() {
-            actList({ refId: this.id, refType: 2 }).then(res => {
+            actList({ refId: this.rid, refType: 2 }).then(res => {
                 if (res.resultCode == 200 && res.resultData) {
                     this.actArr = res.resultData;
+                    setTimeout(() => {
+                        if (this.actArr.length > 0) {
+                            $('#chk0').click();
+                        }
+                    }, 100);
                 } else {
                     this.actArr = [];
                 }
@@ -387,9 +392,9 @@ export default {
             let sum = this.totalPrice * this.form.roomNum;
             if (this.actId) {
                 if (this.actObj.activityType == 0) {
-                    this.total = sum * 100 * this.actObj.discountRatio / 10000;
+                    this.total = parseFloat(sum * 100 * this.actObj.discountRatio / 10000).toFixed(2);
                     this.total = this.total < 0.01 ? 0.01 : this.total;
-                    this.jian = sum - this.total;
+                    this.jian = parseFloat(sum - this.total).toFixed(2);
                 } else {
                     this.total = sum - this.actObj.discountCharge;
                     this.jian = this.actObj.discountCharge;

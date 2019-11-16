@@ -48,7 +48,6 @@ import { LoadMore } from 'muse-ui';
 import { hotelOrderList } from '../../api/hotel';
 import moment from 'moment';
 export default {
-    components: { Kefu },
     data() {
         return {
             refreshing: false,

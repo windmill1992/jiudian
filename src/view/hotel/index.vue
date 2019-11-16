@@ -20,7 +20,7 @@
                                     <p class="name">{{info.hotelName}}</p>
                                     <p class="txt">{{info.startTime}}年开业</p>
                                 </div>
-                                <div class="addr flex fcen">
+                                <div class="addr flex">
                                     <img src="../../assets/img/hotel/map.png" alt="" />
                                     <p>{{info.hotelAddress}}</p>
                                 </div>
@@ -64,6 +64,7 @@
                                     <p class="txt">{{item.hotelRoomDesc}}</p>
                                     <p class="stock">剩余{{item.stock}}{{notHotel ? '' : '间'}}</p>
                                     <div class="price">
+                                        <span class="origin" v-if="item.newPrice">¥{{item.newPrice}}</span>
                                         <span>¥</span>{{item.serviceCharge}}
                                     </div>
                                 </div>
@@ -101,6 +102,7 @@
 <script>
 import 'swiper/dist/css/swiper.min.css';
 import { hotelInfo, hotelFacilityList, hotelChargeDetail } from '../../api/hotel';
+import { actList } from '../../api/api';
 import { setTitle } from '../../utils/setTitle';
 import Swiper from 'swiper';
 export default {
@@ -197,6 +199,9 @@ export default {
                         this.roomList[n]['stock'] = 0;
                     }
                     this.roomList = [...this.roomList];
+                    if (n == this.roomList.length - 1) {
+                        this.getActList();
+                    }
                 }
             })
         },
@@ -206,6 +211,28 @@ export default {
                     this.getHotelChargeDetail(this.roomList[i].hotelRoomId, i);
                 }
             }
+        },
+        getActList() {
+            actList().then(res => {
+                if (res.resultCode == 200 && res.resultData) {
+                    if (res.resultData.length > 0) {
+                        let r = res.resultData;
+                        for (let v of this.roomList) {
+                            if (v.activityIdList.length > 0) {
+                                let obj = r.filter(item => {
+                                    return item.activityId == v.activityIdList[0];
+                                });
+                                if (obj && obj.length > 0) {
+                                    v.newPrice = v.serviceCharge;
+                                    v.serviceCharge = obj[0].activityType == 0 ? parseFloat(v.serviceCharge * obj[0].discountRatio / 100).toFixed(2) : (v.serviceCharge - obj[0].discountCharge);
+                                    v.serviceCharge = v.serviceCharge <= 0 ? 0.01 : v.serviceCharge;
+                                }
+                            }
+                        }
+                        this.roomList = [...this.roomList];
+                    }
+                }
+            })
         },
         editDate(e) {
             e.stopPropagation();
@@ -553,6 +580,11 @@ export default {
                 font-weight: bold;
                 span {
                     font-size: .12rem;
+                }
+                .origin {
+                    font-weight: normal;
+                    color: #c9c9c9;
+                    text-decoration: line-through;
                 }
             }
             .btn {

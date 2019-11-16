@@ -15,7 +15,7 @@ export default new Router({
     {
       path: '/home',
       name: 'home',
-      meta: { title: '大酒店' },
+      meta: { title: '聚洋科技' },
       component: resolve =>  require(['../view/home.vue'], resolve),
     },
     {
