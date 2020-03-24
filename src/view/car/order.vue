@@ -308,6 +308,7 @@ export default {
             showLook: false,
             carChargeList: [],
             dateNum: 0,
+            addrCharge: 0,
         }
     },
     filters: {

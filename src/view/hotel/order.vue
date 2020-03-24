@@ -181,11 +181,15 @@ export default {
                     this.hotelInfo = res.resultData;
                     this.info = obj[0];
                     setTitle(res.resultData.hotelName);
+                    localStorage.setItem('hotelTel', res.resultData.hotelTel);
+                    localStorage.setItem('kfTel', res.resultData.serviceTel);
 
                     if (res.resultData.hotelName.indexOf('酒店') == -1) {
                         this.notHotel = true;
+                        localStorage.setItem('notHotel', 1);
                     } else {
                         this.notHotel = false;
+                        localStorage.removeItem('notHotel');
                     }
                     this.getHotelChargeDetail();
                     setTimeout(() => {

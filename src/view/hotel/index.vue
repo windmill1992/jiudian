@@ -64,7 +64,7 @@
                                     <p class="txt">{{item.hotelRoomDesc}}</p>
                                     <p class="stock">剩余{{item.stock}}{{notHotel ? '' : '间'}}</p>
                                     <div class="price">
-                                        <span class="origin" v-if="item.newPrice">¥{{item.newPrice}}</span>
+                                        <span class="origin" v-if="item.originPrice && item.originPrice > item.serviceCharge">¥{{item.originPrice}}</span>
                                         <span>¥</span>{{item.serviceCharge}}
                                     </div>
                                 </div>
@@ -157,6 +157,7 @@ export default {
 					this.$router.push('/login?from='+ encodeURIComponent(this.$route.fullPath));
                 } else {
                     this.hasData = false;
+                    
                     if (res.resultMsg) {
                         this.$toast.error(res.resultMsg);
                     } else {
@@ -223,7 +224,7 @@ export default {
                                     return item.activityId == v.activityIdList[0];
                                 });
                                 if (obj && obj.length > 0) {
-                                    v.newPrice = v.serviceCharge;
+                                    v.originPrice = v.serviceCharge;
                                     v.serviceCharge = obj[0].activityType == 0 ? parseFloat(v.serviceCharge * obj[0].discountRatio / 100).toFixed(2) : (v.serviceCharge - obj[0].discountCharge);
                                     v.serviceCharge = v.serviceCharge <= 0 ? 0.01 : v.serviceCharge;
                                 }
