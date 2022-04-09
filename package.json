@@ -13,7 +13,7 @@
     "axios": "^0.18.0",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "muse-ui": "^3.0.0",
     "muse-ui-loading": "^0.2.0",
     "muse-ui-message": "^0.2.1",
